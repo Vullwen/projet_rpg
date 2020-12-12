@@ -6,7 +6,7 @@ import pygame
 map = ChangementDeMap(0)
 class Joueur:
     """
-    Je défini toutes les intéractions clavier ici
+    Je défini toutes les intéractions clavier icis
     """
     map = ChangementDeMap(0)
     def __init__(self):
