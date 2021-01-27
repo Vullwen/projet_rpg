@@ -1,0 +1,13 @@
+0 = sol normal
+1 = terre
+2 = sol craquelé
+3 =
+4 = point de spawn du joueur. Si il y en a plusieurs alors il prendra le plus proche de la fin
++ = porte A
+- = porte B
+* = porte C
+/ = porte D
+Nous savons, lorsque nous créons une map, que les portes + et - son "associées"
+ainsi la porte + enmène vers la porte - et inversement
+
+les tuiles : 0,4,2,+,- n'ont pas d'existence physique
