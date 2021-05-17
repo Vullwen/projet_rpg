@@ -50,6 +50,7 @@ class joueur_class:
         self.animation_database = {} #la je créé la database des animations dans un dico
         self.animation_database['run'] = load_animation('Data/player_animations/run',[7,7]) #la database 'run' contien donc le return de load_animation
         self.animation_database['idle'] = load_animation('Data/player_animations/idle',[7,7,40]) #pareil pour la database de 'idle'
+        self.bulle_trash = pygame.image.load("Data/images/bulle_trash.PNG")
         self.player_movement = [0,0] #la liste comprenant les mouvements du joueur
         self.player_action = 'idle' #l'action du joueur (uniquement pour les animations)
         self.player_frame = 0 #de base la frame du joueur est à 0
