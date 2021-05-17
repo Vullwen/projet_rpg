@@ -1,48 +1,63 @@
-import pygame
+import pygame, sys, os, random,time, math
 
 pygame.init()
 
 class Mob(pygame.sprite.Sprite):
-    def __init__(self, x, y):
-        self.x = x*16
-        self.y = y*16
+    def __init__(self):
         self.image = pygame.image.load("Data/images/ennemis.PNG")
-        self.rect =  pygame.Rect(self.x,self.y,16,16)
+        self.life = 20
+        self.movement = [0,0]
+        self.collision = {'top':False,'bottom':False,'right':False,'left':False}
+        self.range = 80
+        self.degats = 10
 
-    def move_to_player(self, player_rect,tile):
-        if player_rect.x < self.rect.x:
-            self.rect = move(movement,tile)
-        if player_rect.x > self.rect.x:
-            self.rect.x += 1
-        if player_rect.y < self.rect.y:
-            self.rect.y -= 1
-        if player_rect.y > self.rect.y:
-            self.rect.y += 1
+    def create_mob(self, x, y, game_map):
+        self.mob_rect = pygame.Rect(x,y,16,16)
+        y = 0
+        for layer in game_map:
+            x = 0
+            for tile in layer:
+                if tile == 'e':
+                    return (x*16, y*16)
+                x += 1
+            y += 1
+
+    def move_to_player(self, player_rect):
+        if math.sqrt(((player_rect.x-self.mob_rect.x)**2)+((player_rect.y-self.mob_rect.y)**2)) < self.range:
+            if player_rect.x < self.mob_rect.x:
+                self.movement[0] -= 1
+            if player_rect.x > self.mob_rect.x:
+                self.movement[0] += 1
+            if player_rect.y < self.mob_rect.y:
+                self.movement[1] -= 1
+            if player_rect.y > self.mob_rect.y:
+                self.movement[1] += 1
 
     def test_hit_player(self, player_rect):
-        if self.rect.colliderect(player_rect):
+        if self.mob_rect.colliderect(player_rect):
             return True
 
     def collision_test(self,tiles):
         collisions = []
         for tile in tiles:
-            if self.rect.colliderect(tile):
+            if self.mob_rect.colliderect(tile):
                 collisions.append(tile)
         return collisions
 
     def move(self,movement,tiles):
-        rect.x += movement[0]
-        collisions = collision_test(self.rect,tiles)
+        self.collision = {'top':False,'bottom':False,'right':False,'left':False}
+        self.mob_rect.x += movement[0]
+        collisions = self.collision_test(tiles)
         for tile in collisions:
             if movement[0] > 0:
-                self.rect.right = tile.left
+                self.mob_rect.right = tile.left
             if movement[0] < 0:
-                self.rect.left = tile.right
-        rect.y += movement[1]
-        collisions = collision_test(self.rect,tiles)
+                self.mob_rect.left = tile.right
+        self.mob_rect.y += movement[1]
+        collisions = self.collision_test(tiles)
         for tile in collisions:
             if movement[1] > 0:
-                self.rect.bottom = tile.top
+                self.mob_rect.bottom = tile.top
             if movement[1] < 0:
-                self.rect.top = tile.bottom
-        return self.rect
+                self.mob_rect.top = tile.bottom
+        return self.mob_rect, self.collision
