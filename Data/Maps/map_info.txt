@@ -1,0 +1,9 @@
+s = sol normal
+m = terre
+j = point de spawn du joueur. Si il y en a plusieurs alors il prendra le plus proche de la fin
+1 = porte A
+9 = porte A'
+2 = porte B
+8 = porte B'
+Nous savons, lorsque nous créons une map, que les portes 1 et 9 son "associées"
+ainsi la porte 2 enmène vers la porte 8 et inversement
